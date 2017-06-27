@@ -6,7 +6,7 @@
 
 
 
-      <link rel="stylesheet" href="../static/style.css">
+      <link rel="stylesheet" href="../static/css/style.css">
 
 
 </head>
@@ -23,12 +23,18 @@
     <div id="login">
       <form name='form-login' method="POST">
         <span class="fontawesome-user"></span>
-          <input type="text" id="user" placeholder="Username" name="user">
+          <input type="text" id="name" placeholder="Name" name="name">
+
+        <span class="fontawesome-user"></span>
+          <input type="text" id="username" placeholder="UserName" name="user">
 
         <span class="fontawesome-lock"></span>
           <input type="password" id="pass" placeholder="Password" name="pass">
 
-        <input type="submit" value="Login">
+        <span class="fontawesome-lock"></span>
+          <input type="password" id="pass" placeholder="Confirm Password" name="pass-confirm">
+
+        <input type="submit" value="Signup">
 
         </form>
     </div>
