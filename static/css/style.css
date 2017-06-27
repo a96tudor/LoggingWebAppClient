@@ -104,16 +104,21 @@ after { clear: both; }
   background: #16aa56;
 }
 
-#login a {
+#signup-container {
+  text-align: center;
+}
+
+#signup-container a {
    color: #fff; !important
    font-weight: bold;
+   align-self: center; !important
 }
 
-#login a:hover {
-  color: #c9f3ff;
-  transform: scale(1.1);
+#signup-container a:hover {
+  color: #E5F4F8
+  transform: scale(1.1)
 }
 
-#login a:active {
-  transform: scale(0.9)
+#signup-container a:active {
+  transform: scale(0.9);
 }
