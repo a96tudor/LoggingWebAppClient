@@ -9,7 +9,7 @@ function validate() {
     return true
   } else {
     attempts_remaining--;
-    alert("You have only " + attempts_remaining + " attempts left")
+    alert("Incorrect credentials. You have only " + attempts_remaining + " attempts left")
 
     if (attempts_remaining == 0) {
       document.getElementById("user").value = "Username";
