@@ -6,7 +6,7 @@
 }
 
 body {
-  background: #2c3338;
+  background: #EAECDA;
   color: #606468;
   font: 87.5%/1.5em 'Open Sans', sans-serif;
   margin: 0;
@@ -38,26 +38,31 @@ a {
 
 after { clear: both; }
 
-#login {
+
+#start-main-container {
   text-align: center;
   color: azure;
   vertical-align: middle;
   margin: 50px auto;
-  width: 320px;
+  width:auto;
+  background: #EAECDA;
 }
 
-#login form {
+#start-main-container form {
   margin: auto;
   padding: 22px 22px 22px 22px;
-  width: 100%;
+  width: 800px;
   border-radius: 5px;
-  background: #282e33;
-  border-top: 3px solid #434a52;
-  border-bottom: 3px solid #434a52;
+  background: #EAECDA;
+  border-top: 4px solid #98BCBF;
+  border-bottom: 4px solid #98BCBF;
+  border-left: 4px solid #98BCBF;
+  border-right: 4px solid #98BCBF;
+  border-radius: 10px;
 }
 
-#login form span {
-  background-color: #363b41;
+#start-main-container form span {
+  background-color: #EAECDA;
   border-radius: 3px 0px 0px 3px;
   border-right: 3px solid #434a52;
   color: #606468;
@@ -69,30 +74,22 @@ after { clear: both; }
   height: 50px;
 }
 
-#login form input[type="text"] {
-  background-color: #3b4148;
-  border-radius: 0px 3px 3px 0px;
-  color: #a9a9a9;
+#start-main-container form input[type="text"] {
+  background-color: #98BCBF;
+  border-radius: 4px;
+  color: #fff;
   margin-bottom: 1em;
   padding: 0 16px;
-  width: 235px;
+  width: 400px;
   height: 50px;
+  text-align: center;
+  text-emphasis-color: #fff;
 }
 
-#login form input[type="password"] {
-  background-color: #3b4148;
-  border-radius: 0px 3px 3px 0px;
-  color: #a9a9a9;
-  margin-bottom: 1em;
-  padding: 0 16px;
-  width: 235px;
-  height: 50px;
-}
-
-#login form input[type="button"] {
+#start-main-container form input[type="button"] {
   background: #b5cd60;
   border: 0;
-  width: 100%;
+  width: 200px;
   height: 40px;
   border-radius: 3px;
   color: white;
@@ -100,25 +97,34 @@ after { clear: both; }
   transition: background 0.3s ease-in-out;
 }
 
-#login form input[type="button"]:hover {
+#start-main-container form input[type="button"]:hover {
   background: #16aa56;
+  transform: scale(1.05)
 }
 
-#signup-container {
-  text-align: center;
+
+#start-main-container form input[type="button"]:active {
+  transform: scale(0.95)
 }
 
-#signup-container a {
-   color: #fff; !important
-   font-weight: bold;
-   align-self: center; !important
+#StartMeUpLogo {
+  text-align : center;
+  padding-top : 100px
+  padding-bottom : 100px;
+  background : #fff;
+  background-size: cover;
+  background-position: center;
+  font-size : 3em;
+  margin-bottom : 100px;
 }
 
-#signup-container a:hover {
-  color: #E5F4F8
-  transform: scale(1.1)
-}
-
-#signup-container a:active {
-  transform: scale(0.9);
+.image-container {
+  height: auto;
+  width : 800px;
+  margin-left : auto;
+  margin-right :auto;
+  margin-top : 0px;
+  margin-bottom : 50px;
+  padding-bottom: 50px;
+  padding-top: 50px;
 }
