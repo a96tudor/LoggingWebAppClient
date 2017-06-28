@@ -10,13 +10,13 @@ function submitCredentials() {
       if (password == password_confirm) {
         return true;
       } else {
-        alert("The passwords don't match!")
+        alert("The two passwords don't match!");
         document.getElementById("pass").value = "";
         document.getElementById("pass-confirm").value = "";
         return false;
       }
     } else {
-      alert("All fields are mandatory!")
+      alert("All fields are mandatory!");
       return false;
     }
   }
