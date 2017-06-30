@@ -9,14 +9,16 @@
 
 </head>
 
-<script src="../static/js/start-stop.js"></script>
+<script src="../static/js/start+stop.js"></script>
 
 <html>
   <body>
-
-    <div id = "top">
-
-      <div id="user-greeting">
+    <script type="text/javascript">
+      var pauseActive = false;
+    </script>
+    <div id = "top-container">
+        <br />
+        <div id="user-greeting">
 
         </div>
 
@@ -27,8 +29,54 @@
       </div>
 
 
-    <div id="working-main-container">
-      
+    <div id="main-container">
+      <div id="timer-container">
+
+        <label id="hours">00</label>:<label id="minutes">00</label>:<label id="seconds">00</label>
+          <script type="text/javascript">
+            var minutesLabel = document.getElementById("minutes");
+            var secondsLabel = document.getElementById("seconds");
+            var hoursLabel = document.getElementById("hours");
+            var totalSeconds = 0;
+            setInterval(setTime, 1000);
+
+            function setTime()
+            {
+              if (pauseActive) return;
+              ++totalSeconds;
+              secondsLabel.innerHTML = pad(totalSeconds%60);
+              var totalMinutes = parseInt(totalSeconds/60);
+              minutesLabel.innerHTML = pad(totalMinutes%60);
+              hoursLabel.innerHTML = pad(parseInt(totalMinutes/60));
+            }
+
+            function pad(val)
+            {
+              var valString = val + "";
+              if(valString.length < 2)
+              {
+                  return "0" + valString;
+              }
+              else
+              {
+                  return valString;
+              }
+            }
+        </script>
+
+      </div>
+
+      <div id="buttons-container">
+
+        <button class="button button-tone-down"
+                onclick="pause_button_press()"
+                id = "pause-button"> Pause
+        </button>
+
+        <button class="button button-tone-down">Done!</button>
+
+      </div>
+
     </div>
   </body>
 </html>

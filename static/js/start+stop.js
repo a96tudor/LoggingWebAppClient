@@ -1,3 +1,5 @@
+var current_email = "";
+
 function start_button_press(){
   var course_name = document.getElementById("course-name").value
   var email = document.getElementById("email").value
@@ -17,8 +19,9 @@ function start_button_press(){
     xhr.onreadystatechange = function () {
       if (xhr.status == 200) {
         if (!displayed_message) {
-          alert("All good!");
+          current_email = email;
           displayed_message = true;
+
         }
       } else {
         if (xhr.responseText != "" &&  !displayed_message) {
@@ -35,5 +38,15 @@ function start_button_press(){
 
   } else {
     alert("No course name entered!");
+  }
+}
+
+function pause_button_press() {
+  console.log(totalSeconds);
+  pauseActive = !pauseActive;
+  if (pauseActive) {
+    document.getElementById("pause-button").innerHTML = "Resume";
+  } else {
+    document.getElementById("pause-button").innerHTML = "Pause";
   }
 }
