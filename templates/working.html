@@ -13,9 +13,7 @@
 
 <html>
   <body>
-    <script type="text/javascript">
-      var pauseActive = false;
-    </script>
+
     <div id = "top-container">
         <br />
         <div id="user-greeting">
@@ -68,12 +66,15 @@
 
       <div id="buttons-container">
 
-        <button class="button button-tone-down"
+        <button class="button"
                 onclick="pause_button_press()"
                 id = "pause-button"> Pause
         </button>
 
-        <button class="button button-tone-down">Done!</button>
+        <button class="button button-tone-down"
+                onclick="done_button_press()"
+                id = "done-button">  Done!
+        </button>
 
       </div>
 

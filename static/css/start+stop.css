@@ -155,7 +155,6 @@ after { clear: both; }
 }
 
 .button {
-  background-color: #b5cd60;
   color : #fff;
   padding : 5px;
   padding-left : 14px;
@@ -174,13 +173,32 @@ after { clear: both; }
   width: auto;
 }
 
-.button:hover {
+#pause-button:hover {
+  background-color : #FF8065;
+  color : #fff;
+  transform : scale(1.05);
+}
+
+#pause-button:active {
+  background-color: #FFBC65;
+  transform : scale(0.95);
+}
+
+#pause-button {
+  background-color: #FFBC65;
+}
+
+#done-button {
+  background-color: #b5cd60;
+}
+
+#done-button:hover {
   background-color : #16aa56;
   color : #fff;
   transform : scale(1.05);
 }
 
-.button:active {
+#done-button:active {
   background-color: #b5cd60;
   transform : scale(0.95);
 }
