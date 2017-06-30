@@ -116,6 +116,9 @@ after { clear: both; }
   background-position: center;
   font-size : 3em;
   margin-bottom : 100px;
+  height: 300px;
+  width: auto;
+  background-image: url("../img/smu-logo-hres.jpg")
 }
 
 .image-container {
@@ -127,4 +130,13 @@ after { clear: both; }
   margin-bottom : 50px;
   padding-bottom: 50px;
   padding-top: 50px;
+}
+
+#top-container {
+  color:#.fff;
+  height: auto;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  background: #2c3338;
 }
