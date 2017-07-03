@@ -13,7 +13,7 @@ function start_button_press(){
     };
 
     var xhr = new XMLHttpRequest();
-    var url = "http://127.0.0.1:5000/start-work";
+    var url = "http://40.71.216.203/start-work";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onreadystatechange = function () {
@@ -64,7 +64,7 @@ function done_button_press() {
     };
 
     var xhr = new XMLHttpRequest();
-    var url = "http://127.0.0.1:5000/stop-work";
+    var url = "http://40.71.216.203/stop-work";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onreadystatechange = function () {
@@ -72,6 +72,7 @@ function done_button_press() {
         if (!displayed_message) {
           alert("success");
           window.location.replace("start.html");
+          displayed_message = true;
         }
       } else {
         if (xhr.responseText != "" &&  !displayed_message) {
