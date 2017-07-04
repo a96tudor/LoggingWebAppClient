@@ -1,10 +1,10 @@
-<script src="static/js/start+stop.js"></script>
+<script src="static/js/main.js"></script>
 
 <script type="text/javascript">
   var time_cookie = read_cookie("time");
+  var email_cookie = read_cookie("email");
   if (time_cookie && email_cookie &&
         parseInt(time_cookie) != 0 && email_cookie!="") {
-    var email_cookie = read_cookie("email");
     var i = email_cookie.indexOf(" ");
     email_cookie = email_cookie.slice(0, i);
     if (email_cookie == "")  {
