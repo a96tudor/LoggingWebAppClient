@@ -22,6 +22,8 @@ function start_button_press(){
           current_email = email;
           displayed_message = true;
           window.location.replace("working.html?"+email);
+          add_cookie("email", email, 20);
+          add_cookie("done", 0, 1);
         }
       } else {
         if (xhr.responseText != "" &&  !displayed_message) {
@@ -29,8 +31,8 @@ function start_button_press(){
           displayed_message = true;
         }
         if (xhr.status != 500) {
-          document.getElementById("course-name").value = ''
-          document.getElementById("email").value = ''
+          document.getElementById("course-name").value = '';
+          document.getElementById("email").value = '';
         }
       }
     };
@@ -71,6 +73,9 @@ function done_button_press() {
       if (xhr.status == 200) {
         if (!displayed_message) {
           alert("success");
+          add_cookie("time", 0, 10);
+          add_cookie("email", "", 20);
+          add_cookie("done", 1, 1);
           window.location.replace("start.html");
           displayed_message = true;
         }
@@ -84,4 +89,27 @@ function done_button_press() {
     xhr.send(JSON.stringify(data_to_send));
   }
 
+}
+
+function add_cookie(name, value, exDays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exDays*24*60*60*1000))
+  var expiresAt = " expires="+d.toUTCString();
+  document.cookie = name+"="+value+expiresAt+"; path=/";
+}
+
+function read_cookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(";");
+  for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return(c.substring(nameEQ.length, c.length));
+	}
+  return null;
+}
+
+function delete_cookie(name) {
+  var expiresAt = "expires=Thu, 01 Jan 1970 00:00:01 GMT"
+  document.cookie = name+"=;" + expiresAt;
 }

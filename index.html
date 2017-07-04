@@ -1,3 +1,16 @@
+<script src="static/js/start+stop.js"></script>
+
 <script type="text/javascript">
-  window.location.replace("templates/start.html");
+  var time_cookie = read_cookie("time");
+  var email_cookie = read_cookie("email");
+  var i = email_cookie.indexOf(" ");
+  email_cookie = email_cookie.slice(0, i);
+  if (time_cookie && email_cookie &&
+        parseInt(time_cookie) != 0 && email_cookie!="") {
+    window.location.replace("templates/working.html?"+email_cookie);
+  } else {
+    add_cookie("time", 0, 10);
+    add_cookie("email", "", 20);
+    window.location.replace("templates/start.html");
+  }
 </script>
