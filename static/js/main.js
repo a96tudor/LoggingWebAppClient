@@ -1,4 +1,5 @@
 var pauseActive = false;
+var attempts_remaining = 3;
 
 function start_button_press(){
   var course_name = document.getElementById("course-name").value
@@ -112,4 +113,63 @@ function read_cookie(name) {
 function delete_cookie(name) {
   var expiresAt = "expires=Thu, 01 Jan 1970 00:00:01 GMT"
   document.cookie = name+"=;" + expiresAt;
+}
+
+function login_validate() {
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("pass").value;
+  var displayed_message = false;
+
+  if (password && email) {
+
+    var data_to_send = {
+      "email": email,
+      "password": password
+    };
+
+    var xhr = new XMLHttpRequest();
+    var url = "http://40.71.216.203/login";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (xhr.status == 200) {
+        if (!displayed_message) {
+          displayed_message = true;
+          alert("Login successful");
+        }
+      } else {
+        if (xhr.responseText != "" &&  !displayed_message) {
+          alert("Incorrect credentials. You have only " + attempts_remaining + " attempts left")
+          displayed_message = true;
+        }
+        if (xhr.status != 500) {
+          document.getElementById("pass").value = '';
+          document.getElementById("email").value = '';
+        }
+
+        attempts_remaining--;
+        if (attempts_remaining == 0) {
+          document.getElementById("email").value = "email";
+          document.getElementById("pass").value = "Password";
+
+          document.getElementById("email").disabled = true;
+          document.getElementById("pass").disabled = true;
+          document.getElementById("submit").disabled = true;
+
+          return false
+        }
+      }
+    };
+    xhr.send(JSON.stringify(data_to_send));
+
+  if (username == "admin" && password=="pass") {
+    alert("Login Successfully")
+    return true
+  } else {
+    attempts_remaining--;
+    alert("Incorrect credentials. You have only " + attempts_remaining + " attempts left")
+
+
+
+  }
 }
