@@ -3,18 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Start page</title>
+  <script src="../static/js/main.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
-      <link rel="stylesheet" href="../static/css/start+stop.css">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
 
+  <link rel="stylesheet" href="../static/css/start+stop.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 </head>
 
-<script src="../static/js/main.js"></script>
 
 <html>
   <body>
     <script>
-      add_cookie("time", 0, 10);
+      window.onload = function() {
+        add_cookie("time", 0, 10);
+        load_courses();
+      }
     </script>
     <title> Start page </title>
 
@@ -32,11 +38,20 @@
             onfocus="this.placeholder = ''"
             onblur="this.placeholder = 'Enter your email here...'"      />
         <br/>
-        <input type="text" id="course-name"
-            placeholder="Enter the course name here..."
-            onfocus="this.placeholder = ''"
-            onblur="this.placeholder = 'Enter the course name here...'"      />
-        <br/>
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $(".js-example-basic-single").select2();
+          });
+        </script>
+        <label for="id_label_single">
+          Select Course:
+          <br/>
+          <select class="js-example-basic-single js-states form-control" id="id_label_single">
+
+          </select>
+          <br/>
+        </label>
+
         <input type="button" value="Start work!" id="submit" onclick="start_button_press()"/>
       </form>
     </div>

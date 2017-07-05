@@ -1,11 +1,20 @@
 var pauseActive = false;
 var attempts_remaining = 3;
 
+function getSelectedText(elementId) {
+    var elt = document.getElementById(elementId);
+
+    if (elt.selectedIndex == -1)
+        return null;
+
+    return elt.options[elt.selectedIndex].text;
+}
+
 function start_button_press(){
-  var course_name = document.getElementById("course-name").value
+  var course_name = getSelectedText("id_label_single");
   var email = document.getElementById("email").value
   var displayed_message = false;
-
+  return; // DELETE THIS BEFORE GOING LIVE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   if (course_name && email) {
 
     var data_to_send = {
@@ -169,7 +178,32 @@ function login_validate() {
     attempts_remaining--;
     alert("Incorrect credentials. You have only " + attempts_remaining + " attempts left")
 
-
-
   }
+}
+}
+
+function load_courses() {
+  var courses = [
+    {"name":"Course1",
+     "id": 0,
+    },
+    {"name":"Course2",
+     "id": 1,
+    },
+    {"name":"Course3",
+     "id": 2,
+    },
+  ];
+  var option_open = "<option>";
+  var option_close = "</option>";
+  var innerHTML = "";
+  var arrayLength = courses.length;
+
+  for (var i = 0; i < arrayLength; i++) {
+    innerHTML += option_open + courses[i]["name"] + option_close + "\n";
+  }
+
+  console.log(innerHTML);
+
+  document.getElementById("id_label_single").innerHTML = innerHTML;
 }
