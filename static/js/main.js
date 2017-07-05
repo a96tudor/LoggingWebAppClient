@@ -203,7 +203,5 @@ function load_courses() {
     innerHTML += option_open + courses[i]["name"] + option_close + "\n";
   }
 
-  console.log(innerHTML);
-
   document.getElementById("id_label_single").innerHTML = innerHTML;
 }
