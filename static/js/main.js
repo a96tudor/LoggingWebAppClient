@@ -14,7 +14,6 @@ function start_button_press(){
   var course_name = getSelectedText("id_label_single");
   var email = document.getElementById("email").value
   var displayed_message = false;
-  return; // DELETE THIS BEFORE GOING LIVE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   if (course_name && email) {
 
     var data_to_send = {

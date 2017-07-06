@@ -38,7 +38,7 @@ a {
 
 after { clear: both; }
 
-#login {
+.login_validate {
   text-align: center;
   color: azure;
   vertical-align: middle;
@@ -46,7 +46,7 @@ after { clear: both; }
   width: 320px;
 }
 
-#login form {
+.login_validate form {
   margin: auto;
   padding: 22px 22px 22px 22px;
   width: 100%;
@@ -56,7 +56,7 @@ after { clear: both; }
   border-bottom: 3px solid #434a52;
 }
 
-#login form span {
+.login_validate form span {
   background-color: #363b41;
   border-radius: 3px 0px 0px 3px;
   border-right: 3px solid #434a52;
@@ -69,7 +69,7 @@ after { clear: both; }
   height: 50px;
 }
 
-#login form input[type="text"] {
+.login_validate form input[type="text"] {
   background-color: #3b4148;
   border-radius: 0px 3px 3px 0px;
   color: #a9a9a9;
@@ -79,7 +79,7 @@ after { clear: both; }
   height: 50px;
 }
 
-#login form input[type="password"] {
+.login_validate form input[type="password"] {
   background-color: #3b4148;
   border-radius: 0px 3px 3px 0px;
   color: #a9a9a9;
@@ -89,7 +89,7 @@ after { clear: both; }
   height: 50px;
 }
 
-#login form input[type="submit"] {
+.login_validate form input[type="submit"] {
   background: #b5cd60;
   border: 0;
   width: 100%;
@@ -100,21 +100,36 @@ after { clear: both; }
   transition: background 0.3s ease-in-out;
 }
 
-#login form input[type="submit"]:hover {
+.login_validate form input[type="submit"]:hover {
   background: #16aa56;
 }
 
-#login a {
+.login_validate form input[type="button"] {
+  background: #b5cd60;
+  border: 0;
+  width: 100%;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.login_validate form input[type="button"]:hover {
+  background: #16aa56;
+}
+
+.login_validate a {
    color: #fff; !important
    font-weight: bold;
 }
 
-#login a:hover {
+.login_validate a:hover {
   color: #c9f3ff;
   transform: scale(1.1);
 }
 
-#login a:active {
+.login_validate a:active {
   transform: scale(0.9)
 }
 
