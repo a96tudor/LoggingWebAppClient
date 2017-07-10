@@ -1,5 +1,6 @@
 var pauseActive = false;
 var attempts_remaining = 3;
+var BASE_URL = "https://www.neural-guide.me"
 
 function getSelectedText(elementId) {
     var elt = document.getElementById(elementId);
@@ -22,7 +23,7 @@ function start_button_press(){
     };
 
     var xhr = new XMLHttpRequest();
-    var url = "http://40.71.216.203/start-work";
+    var url = BASE_URL + "/start-work";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onreadystatechange = function () {
@@ -75,7 +76,7 @@ function done_button_press() {
     };
 
     var xhr = new XMLHttpRequest();
-    var url = "http://40.71.216.203/stop-work";
+    var url = BASE_URL + "/stop-work";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onreadystatechange = function () {
@@ -136,7 +137,7 @@ function login_validate() {
     };
 
     var xhr = new XMLHttpRequest();
-    var url = "http://40.71.216.203/login";
+    var url = BASE_URL + "/login";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onreadystatechange = function () {
@@ -182,25 +183,34 @@ function login_validate() {
 }
 
 function load_courses() {
-  var courses = [
-    {"name":"Course1",
-     "id": 0,
-    },
-    {"name":"Course2",
-     "id": 1,
-    },
-    {"name":"Course3",
-     "id": 2,
-    },
-  ];
-  var option_open = "<option>";
-  var option_close = "</option>";
-  var innerHTML = "";
-  var arrayLength = courses.length;
 
-  for (var i = 0; i < arrayLength; i++) {
-    innerHTML += option_open + courses[i]["name"] + option_close + "\n";
+  let url = BASE_URL + "/get-courses";
+  var courses = [];
+
+  let option_open = "<option>";
+  let option_close = "</option>";
+  let innerHTML = "";
+  let arrayLength = courses.length;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", url, true);
+  xhr.responseType = 'json';
+
+  xhr.onreadystatechange = function () {
+    if (xhr.status == 200) {
+      // all good
+      if (xhr.response) {
+        response = xhr.response;
+        for (var i = 0; i < response["courses"].length; i++) {
+          innerHTML += option_open + response["courses"][i]["name"] + option_close + "\n";
+        }
+        document.getElementById("id_label_single").innerHTML = innerHTML;
+        }
+    } else {
+      //console.log(xhr.responseText);
+    }
   }
 
-  document.getElementById("id_label_single").innerHTML = innerHTML;
+  xhr.send();
+
 }
