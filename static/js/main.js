@@ -136,8 +136,8 @@ function login_validate() {
       "password": password
     };
 
-    var xhr = new XMLHttpRequest();
-    var url = BASE_URL + "/login";
+    let xhr = new XMLHttpRequest();
+    let url = BASE_URL + "/login";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onreadystatechange = function () {
@@ -177,7 +177,6 @@ function login_validate() {
   } else {
     attempts_remaining--;
     alert("Incorrect credentials. You have only " + attempts_remaining + " attempts left")
-
   }
 }
 }
@@ -212,5 +211,4 @@ function load_courses() {
   }
 
   xhr.send();
-
 }
