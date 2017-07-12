@@ -142,8 +142,23 @@ function login_validate() {
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.responseType = "json";
     xhr.onreadystatechange = function () {
-      console.log("STATUS=" + xhr.status);
-      console.log("DATA=" + xhr.response);
+      if (!xhr.response) return;
+      if (xhr.status==200) {
+        response = xhr.response;
+        if (response["success"]) {
+          alert("Login successful!");
+          add_cookie("id", response["id"]);
+          add_cookie("name", response["name"]);
+          add_cookie("token", response["token"]);
+          window.location.replace("start.html?"+response["id"]);
+        } else {
+          alert(response["message"]);
+          if (response["message"]=="User not validated")
+            window.location.replace("validate.html?"+response["id"]);
+        }
+      } else {
+        alert("Something went wrong! Please contact an admin.");
+      }
     };
     xhr.send(JSON.stringify(dataToSend));
 
