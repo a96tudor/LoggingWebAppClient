@@ -10,13 +10,25 @@ function submitData() {
         "id": location.search.substr(1),
         "pass": pass
       };
-      let url = BASE_URL + "/validate-user";
+      let url = BASE_URL + "/user-validate";
       let xhr = new XMLHttpRequest();
-      xhr.setRequestHeader("Content-type", "application/json");
       xhr.open("POST", url, true);
+      xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
       xhr.onreadystatechange = function () {
-        console.log("STATUS=" + xhr.status);
-        console.log("RESPONSE_TEXT=" + xhr.responseText);
+        if (xhr.status == 200) {
+          // All good, redirecting to login
+          alert("Validation successful! Redirecting to login...");
+          window.location.replace("login.html");
+        } else if (xhr.status==500) {
+          alert("Something went wrong. Please contact an administrator.");
+        } else {
+          if (xhr.response == "User's password already set") {
+            alert("You have already been validated. Redirecting to login...");
+            window.location.replace("login.html");
+          } else {
+            alert("Something went wrong. Please contact an administrator.");
+          }
+        }
       };
       xhr.send(JSON.stringify(dataToSend));
     } else {
