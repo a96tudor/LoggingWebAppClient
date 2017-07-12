@@ -10,17 +10,19 @@
 </head>
 
 <body>
+  <meta charset="UTF-8">
+
     <div id="validate-container" class="login_validate">
-      <form name='form-validate' method="POST" id="form-validate">
+      <div id="validate-form-container">
         <span class="fontawesome-user"></span>
           <input type="password" id="pass" placeholder="Enter your password here..." name="pass">
 
         <span class="fontawesome-lock"></span>
           <input type="password" id="pass_confirm" placeholder="Confirm password..." name="pass_confirm" >
 
-        <input type="button" value="Submit" onclick="console.log('test'); submit_data()">
+        <input type="button" value="Submit" onclick="submitData();">
 
-        </form>
+      </div>
     </div>
 
 </body>

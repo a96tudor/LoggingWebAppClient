@@ -46,7 +46,7 @@ after { clear: both; }
   width: 320px;
 }
 
-.login_validate form {
+.login_validate div {
   margin: auto;
   padding: 22px 22px 22px 22px;
   width: 100%;
@@ -56,7 +56,7 @@ after { clear: both; }
   border-bottom: 3px solid #434a52;
 }
 
-.login_validate form span {
+.login_validate div span {
   background-color: #363b41;
   border-radius: 3px 0px 0px 3px;
   border-right: 3px solid #434a52;
@@ -69,7 +69,7 @@ after { clear: both; }
   height: 50px;
 }
 
-.login_validate form input[type="text"] {
+.login_validate div input[type="text"] {
   background-color: #3b4148;
   border-radius: 0px 3px 3px 0px;
   color: #a9a9a9;
@@ -79,7 +79,7 @@ after { clear: both; }
   height: 50px;
 }
 
-.login_validate form input[type="password"] {
+.login_validate div input[type="password"] {
   background-color: #3b4148;
   border-radius: 0px 3px 3px 0px;
   color: #a9a9a9;
@@ -89,7 +89,7 @@ after { clear: both; }
   height: 50px;
 }
 
-.login_validate form input[type="submit"] {
+.login_validate div input[type="submit"] {
   background: #b5cd60;
   border: 0;
   width: 100%;
@@ -100,11 +100,11 @@ after { clear: both; }
   transition: background 0.3s ease-in-out;
 }
 
-.login_validate form input[type="submit"]:hover {
+.login_validate div input[type="submit"]:hover {
   background: #16aa56;
 }
 
-.login_validate form input[type="button"] {
+.login_validate div input[type="button"] {
   background: #b5cd60;
   border: 0;
   width: 100%;
@@ -115,7 +115,7 @@ after { clear: both; }
   transition: background 0.3s ease-in-out;
 }
 
-.login_validate form input[type="button"]:hover {
+.login_validate div input[type="button"]:hover {
   background: #16aa56;
 }
 
