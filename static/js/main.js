@@ -131,54 +131,38 @@ function login_validate() {
 
   if (password && email) {
 
-    var data_to_send = {
+    var dataToSend = {
       "email": email,
       "password": password
     };
 
     let xhr = new XMLHttpRequest();
-    let url = BASE_URL + "/login";
+    let url = BASE_URL + "/user/login";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json");
+    xhr.responseType = "json";
     xhr.onreadystatechange = function () {
-      if (xhr.status == 200) {
-        if (!displayed_message) {
-          displayed_message = true;
-          alert("Login successful");
+      if (!xhr.response) return;
+      if (xhr.status==200) {
+        response = xhr.response;
+        if (response["success"]) {
+          alert("Login successful!");
+          add_cookie("id", response["id"]);
+          add_cookie("name", response["name"]);
+          add_cookie("token", response["token"]);
+          window.location.replace("start.html?"+response["id"]);
+        } else {
+          alert(response["message"]);
+          if (response["message"]=="User not validated")
+            window.location.replace("validate.html?"+response["id"]);
         }
       } else {
-        if (xhr.responseText != "" &&  !displayed_message) {
-          alert("Incorrect credentials. You have only " + attempts_remaining + " attempts left")
-          displayed_message = true;
-        }
-        if (xhr.status != 500) {
-          document.getElementById("pass").value = '';
-          document.getElementById("email").value = '';
-        }
-
-        attempts_remaining--;
-        if (attempts_remaining == 0) {
-          document.getElementById("email").value = "email";
-          document.getElementById("pass").value = "Password";
-
-          document.getElementById("email").disabled = true;
-          document.getElementById("pass").disabled = true;
-          document.getElementById("submit").disabled = true;
-
-          return false
-        }
+        alert("Something went wrong! Please contact an admin.");
       }
     };
-    xhr.send(JSON.stringify(data_to_send));
+    xhr.send(JSON.stringify(dataToSend));
 
-  if (username == "admin" && password=="pass") {
-    alert("Login Successfully")
-    return true
-  } else {
-    attempts_remaining--;
-    alert("Incorrect credentials. You have only " + attempts_remaining + " attempts left")
   }
-}
 }
 
 function load_courses() {

@@ -21,17 +21,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
 
 </head>
-    <div id="login" class = "login-validate">
-      <form name='form-login' method="POST">
+    <div id="login" class="login_validate">
+      <div id="login-form-container">
         <span class="fontawesome-user"></span>
-          <input type="text" id="user" placeholder="Username" name="user">
+          <input type="text" id="email" placeholder="Email..." name="user">
 
         <span class="fontawesome-lock"></span>
-          <input type="password" id="pass" placeholder="Password" name="pass">
+          <input type="password" id="pass" placeholder="Password..." name="pass">
 
-        <input type="submit" value="Login" onclick="login_validate()">
+        <input type="button" value="Login" onclick="login_validate()">
 
-      </form>
+      </div>
 
     </div>
 
