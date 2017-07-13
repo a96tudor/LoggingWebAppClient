@@ -92,7 +92,7 @@ function done_button_press() {
           alert("success");
           add_cookie("time", 0, 10);
           add_cookie("done", 1, 1);
-          window.location.replace("start.html");
+          window.location.replace("start.html?"+id);
           displayed_message = true;
         }
       } else {
@@ -204,4 +204,35 @@ function load_courses() {
   }
 
   xhr.send();
+}
+
+function logout() {
+  if (confirm("Are you sure?")) {
+    let id = read_cookie("id");
+    let url = BASE_URL + "/user/logout";
+    var dataToSend = {"id": id}
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.responseType = 'json';
+
+    xhr.onreadystatechange = function () {
+      if (!xhr.response) return;
+      if (xhr.status == 200) {
+        let response = xhr.response;
+        if (response["success"]) {
+          delete_cookie("token");
+          delete_cookie("id");
+          delete_cookie("name");
+          window.location.replace("/");
+        } else {
+          alert("Something went wrong. Please contact an admin.");
+        }
+      } else {
+        alert("Something went wrong. Please contact an admin.");
+      }
+    }
+    xhr.send(JSON.stringify(dataToSend));
+  }
 }
