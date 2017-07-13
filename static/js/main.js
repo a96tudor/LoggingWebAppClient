@@ -110,12 +110,15 @@ function add_cookie(name, value, exDays) {
 
 function read_cookie(name) {
   var nameEQ = name + "=";
-  var ca = document.cookie.split(";");
+  var ca = document.cookie.split(';');
   for(var i=0;i < ca.length;i++) {
-		var c = ca[i];
-		while (c.charAt(0)==' ') c = c.substring(1,c.length);
-		if (c.indexOf(nameEQ) == 0) return(c.substring(nameEQ.length, c.length));
-	}
+    var c = ca[i];
+    while (c.charAt(0)==' ') c = c.substring(1,c.length);
+    if (c.indexOf(nameEQ) == 0) {
+      let result = c.substring(nameEQ.length,c.length);
+      return result.substring(0, result.indexOf(" expires="));
+    }
+  }
   return null;
 }
 
@@ -147,9 +150,9 @@ function login_validate() {
         response = xhr.response;
         if (response["success"]) {
           alert("Login successful!");
-          add_cookie("id", response["id"]);
-          add_cookie("name", response["name"]);
-          add_cookie("token", response["token"]);
+          add_cookie("id", response["id"], 1);
+          add_cookie("name", response["name"], 1);
+          add_cookie("token", response["token"], 1);
           window.location.replace("start.html?"+response["id"]);
         } else {
           alert(response["message"]);

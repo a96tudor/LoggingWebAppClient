@@ -260,3 +260,10 @@ after { clear: both; }
 .dropdown-content p:hover {background-color: #ddd}
 
 .show {display:block;}
+
+form h1 {
+  text-decoration: none;
+  color: #000;
+  font-size: bold;
+  left:2%;
+}

@@ -20,6 +20,8 @@
       window.onload = function() {
         add_cookie("time", 0, 10);
         load_courses();
+        let name = read_cookie("name");
+        document.getElementById("name-h1").innerHTML = "Hello, " + name;
       }
     </script>
     <title> Start page </title>
@@ -34,9 +36,8 @@
     <div id="main-container">
       <form name="start-form" id="start-form" method="POST">
 
-        <input type="text" id="email" placeholder="Enter your email here..."
-            onfocus="this.placeholder = ''"
-            onblur="this.placeholder = 'Enter your email here...'"      />
+        <h1 id="name-h1"> </h1>
+        
         <br/>
         <script type="text/javascript">
           $(document).ready(function() {
