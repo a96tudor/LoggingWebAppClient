@@ -11,14 +11,24 @@ function getSelectedText(elementId) {
     return elt.options[elt.selectedIndex].text;
 }
 
+function check_id(id) {
+  let URL_id = location.search.substr(1);
+  return (URL_id == id);
+}
+
 function start_button_press(){
-  var course_name = getSelectedText("id_label_single");
-  var email = document.getElementById("email").value
+  let course_name = getSelectedText("id_label_single");
+  let id = read_cookie("id");
+  if (!check_id(id)) {
+    console.log("ID tempered with... Redirecting to login...")
+    return;
+  }
+
   var displayed_message = false;
-  if (course_name && email) {
+  if (course_name && id) {
 
     var data_to_send = {
-      "email": email,
+      "id": id,
       "course": course_name
     };
 
@@ -29,10 +39,8 @@ function start_button_press(){
     xhr.onreadystatechange = function () {
       if (xhr.status == 200) {
         if (!displayed_message) {
-          current_email = email;
           displayed_message = true;
-          window.location.replace("working.html?"+email);
-          add_cookie("email", email, 20);
+          window.location.replace("working.html?"+id);
           add_cookie("done", 0, 1);
         }
       } else {
@@ -64,14 +72,13 @@ function pause_button_press() {
 
 function done_button_press() {
 
-  var email = location.search.substr(1);
-  console.log(email);
+  let id = read_cookie("id");
 
   var displayed_message = false;
   if (confirm("You are about to submit. Are you sure you want to do this?")) {
 
     var data_to_send = {
-      "email": email,
+      "id": id,
       "time": totalSeconds
     };
 
@@ -84,7 +91,6 @@ function done_button_press() {
         if (!displayed_message) {
           alert("success");
           add_cookie("time", 0, 10);
-          add_cookie("email", "", 20);
           add_cookie("done", 1, 1);
           window.location.replace("start.html");
           displayed_message = true;
@@ -110,12 +116,15 @@ function add_cookie(name, value, exDays) {
 
 function read_cookie(name) {
   var nameEQ = name + "=";
-  var ca = document.cookie.split(";");
+  var ca = document.cookie.split(';');
   for(var i=0;i < ca.length;i++) {
-		var c = ca[i];
-		while (c.charAt(0)==' ') c = c.substring(1,c.length);
-		if (c.indexOf(nameEQ) == 0) return(c.substring(nameEQ.length, c.length));
-	}
+    var c = ca[i];
+    while (c.charAt(0)==' ') c = c.substring(1,c.length);
+    if (c.indexOf(nameEQ) == 0) {
+      let result = c.substring(nameEQ.length,c.length);
+      return result.substring(0, result.indexOf(" expires="));
+    }
+  }
   return null;
 }
 
@@ -147,9 +156,9 @@ function login_validate() {
         response = xhr.response;
         if (response["success"]) {
           alert("Login successful!");
-          add_cookie("id", response["id"]);
-          add_cookie("name", response["name"]);
-          add_cookie("token", response["token"]);
+          add_cookie("id", response["id"], 1);
+          add_cookie("name", response["name"], 1);
+          add_cookie("token", response["token"], 1);
           window.location.replace("start.html?"+response["id"]);
         } else {
           alert(response["message"]);
