@@ -1,61 +1,72 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/css/menu.css">
+  <script src="../static/js/main.js"></script>
+
   <meta charset="UTF-8">
   <title>Start page</title>
-  <script src="../static/js/main.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
-
-  <link rel="stylesheet" href="../static/css/start+stop.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 </head>
 
+<body>
 
-<html>
-  <body>
-    <script>
-      window.onload = function() {
-        add_cookie("time", 0, 10);
-        load_courses();
-        let name = read_cookie("name");
-        document.getElementById("name-h1").innerHTML = "Hello, " + name;
-      }
-    </script>
-    <title> Start page </title>
+  <script>
+    window.onload = function() {
+      add_cookie("time", 0, 10);
+      load_courses();
+      let name = read_cookie("name");
+      document.getElementById("name-h1").innerHTML = "Hello, " + name;
+    }
+  </script>
+  <title> Start page </title>
 
-    <div id="top-container">
+  <ul class="topnav">
+    <li><a class="active" id="home-button">Start</a></li>
+    <li><a>My History</a></li>
+    <li><a>Leaderboard</a></li>
+    <li><a>My Account</a></li>
+    <li><a>Contact</a></li>
+    <li class="right"><a onclick="logout()">Log Out</a></li>
+  </ul>
+
+  <div id="top-container">
+    <div id="StartMeUpLogo">
       <br/>
-      <input type="button" value="Logout" id="logout" onclick="logout()"/> 
-      <div id="StartMeUpLogo">
-          <br/>
-      </div>
     </div>
+  </div>
 
-    <div id="main-container">
-      <form name="start-form" id="start-form" method="POST">
+  <div id="main-container">
+    <form name="start-form" id="start-form" method="POST">
 
-        <h1 id="name-h1"> </h1>
+      <h1 id="name-h1"> </h1>
 
+      <br/>
+      <script type="text/javascript">
+        $(document).ready(function() {
+          $(".js-example-basic-single").select2();
+        });
+      </script>
+      <label for="id_label_single">
+        Select Course:
         <br/>
-        <script type="text/javascript">
-          $(document).ready(function() {
-            $(".js-example-basic-single").select2();
-          });
-        </script>
-        <label for="id_label_single">
-          Select Course:
-          <br/>
-          <select class="js-example-basic-single js-states form-control" id="id_label_single">
+        <select class="js-example-basic-single js-states form-control" id="id_label_single">
 
-          </select>
-          <br/>
-        </label>
+        </select>
+        <br/>
+      </label>
 
-        <input type="button" value="Start work!" id="submit" onclick="start_button_press()"/>
-      </form>
-    </div>
-  </body>
+      <input type="button" value="Start work!" id="submit" onclick="start_button_press()"/>
+    </form>
+  </div>
+
+
+
+
+</body>
 </html>
