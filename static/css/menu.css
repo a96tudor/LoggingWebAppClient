@@ -1,0 +1,378 @@
+body {margin: 0;}
+
+ul.topnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.topnav li a:hover:not(.active) {
+  background-color: #111;
+}
+
+ul.topnav li a.active {
+  background-color: #4CAF50;
+}
+
+ul.topnav li.right {
+  float: right;
+  background-color: #FF3800;
+}
+
+@media screen and (max-width: 600px){
+    ul.topnav li.right,
+    ul.topnav li {float: none;}
+}
+
+body {
+  background: #EAECDA;
+  color: #606468;
+  font: 87.5%/1.5em 'Open Sans', sans-serif;
+  margin: 0;
+}
+
+#StartMeUpLogo {
+  text-align : center;
+  padding-top : 100px
+  padding-bottom : 100px;
+  background : #fff;
+  background-size: cover;
+  background-position: center;
+  font-size : 3em;
+  margin-bottom : 100px;
+  height: 300px;
+  width: auto;
+  background-image: url("../img/smu-logo-hres.jpg")
+}
+
+.image-container {
+  height: auto;
+  width : 800px;
+  margin-left : auto;
+  margin-right :auto;
+  margin-top : 0px;
+  margin-bottom : 50px;
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
+
+#top-container {
+  color:#.fff;
+  height: auto;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  background: #2c3338;
+}
+
+#timer-container {
+  color: #000;
+  font-family: 'FontAwesome', sans-serif;
+  font-size: 80px;
+  font-weight: bolder;
+  font-style: italic;
+}
+
+#buttons-container {
+  margin-top: 20px;
+  padding-top: 20px;
+}
+
+.button {
+  color : #fff;
+  padding : 5px;
+  padding-left : 14px;
+  padding-right : 14px;
+  font-size : 1.2em;
+  border-radius : 5px;
+  margin : 10px;
+  display: inline-block;
+  transition: background 0.3s ease-in-out;
+  line-height: 1.5;
+  font-family: 'Lato', sans-serif;
+  border : none;
+  font-weight : bold;
+  cursor : pointer;
+  height: 40px;
+  width: auto;
+}
+
+#pause-button:hover {
+  background-color : #FF8065;
+  color : #fff;
+  transform : scale(1.05);
+}
+
+#pause-button:active {
+  background-color: #FFBC65;
+  transform : scale(0.95);
+}
+
+#pause-button {
+  background-color: #FFBC65;
+}
+
+#done-button {
+  background-color: #b5cd60;
+}
+
+#done-button:hover {
+  background-color : #16aa56;
+  color : #fff;
+  transform : scale(1.05);
+}
+
+#done-button:active {
+  background-color: #b5cd60;
+  transform : scale(0.95);
+}
+
+#myInput {
+    border-box: box-sizing;
+    background-image: url('searchicon.png');
+    background-position: 14px 12px;
+    background-repeat: no-repeat;
+    font-size: 16px;
+    padding: 14px 20px 12px 45px;
+    border: none;
+}
+
+.search_dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f6f6f6;
+    min-width: 230px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content p {
+    color: black;
+    padding: 0;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content p:hover {background-color: #ddd}
+
+.show {display:block;}
+
+form h1 {
+  text-decoration: none;
+  color: #000;
+  font-size: bold;
+  left:2%;
+}
+
+#main-container {
+  text-align: center;
+  color: azure;
+  vertical-align: middle;
+  margin: 50px auto;
+  width:auto;
+  background: #EAECDA;
+}
+
+#main-container form{
+  margin: auto;
+  padding: 22px 22px 22px 22px;
+  width: 800px;
+  border-radius: 5px;
+  background: #EAECDA;
+  border-top: 4px solid #98BCBF;
+  border-bottom: 4px solid #98BCBF;
+  border-left: 4px solid #98BCBF;
+  border-right: 4px solid #98BCBF;
+  border-radius: 10px;
+}
+
+#main-container span{
+  background-color: inherit;
+}
+
+#main-container select{
+  position:relative;
+  align-self: center;
+  border: 0px;
+  background-color: #98BCBF;
+  border-radius: 4px;
+  color: #fff;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 400px;
+  height: 50px;
+  text-align: center;
+  text-emphasis-color: #fff;
+}
+
+#main-container form input[type="text"]{
+  font-size: 12px;
+  font-weight: bold;
+  font-family: 'Open Sans', Arial, sans-serif;
+  background-color: #98BCBF;
+  border-radius: 4px;
+  color: #fff;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 400px;
+  height: 50px;
+  text-align: center;
+  text-emphasis-color: #fff;
+}
+
+#main-container form input[type="button"] {
+  margin-top: 10px;
+  position:relative;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: 'Open Sans', Arial, sans-serif;
+  background: #b5cd60;
+  border: 0;
+  width: 200px;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+#main-container form input[type="button"]:hover {
+  background: #16aa56;
+  transform: scale(1.05)
+}
+
+
+#main-container form input[type="button"]:active {
+  transform: scale(0.95)
+}
+
+#main-container label {
+  position:relative;
+  color: #000;
+  /*font-size: 12px;*/
+  font-weight: bold;
+  font-family: 'Open Sans', Arial, sans-serif;
+}
+
+#timer-container {
+  color: #000;
+  font-family: 'FontAwesome', sans-serif;
+  font-size: 80px;
+  font-weight: bolder;
+  font-style: italic;
+}
+
+#buttons-container {
+  margin-top: 20px;
+  padding-top: 20px;
+}
+
+.button {
+  color : #fff;
+  padding : 5px;
+  padding-left : 14px;
+  padding-right : 14px;
+  font-size : 1.2em;
+  border-radius : 5px;
+  margin : 10px;
+  display: inline-block;
+  transition: background 0.3s ease-in-out;
+  line-height: 1.5;
+  font-family: 'Lato', sans-serif;
+  border : none;
+  font-weight : bold;
+  cursor : pointer;
+  height: 40px;
+  width: auto;
+}
+
+#pause-button:hover {
+  background-color : #FF8065;
+  color : #fff;
+  transform : scale(1.05);
+}
+
+#pause-button:active {
+  background-color: #FFBC65;
+  transform : scale(0.95);
+}
+
+#pause-button {
+  background-color: #FFBC65;
+}
+
+#done-button {
+  background-color: #b5cd60;
+}
+
+#done-button:hover {
+  background-color : #16aa56;
+  color : #fff;
+  transform : scale(1.05);
+}
+
+#done-button:active {
+  background-color: #b5cd60;
+  transform : scale(0.95);
+}
+
+#myInput {
+    border-box: box-sizing;
+    background-image: url('searchicon.png');
+    background-position: 14px 12px;
+    background-repeat: no-repeat;
+    font-size: 16px;
+    padding: 14px 20px 12px 45px;
+    border: none;
+}
+
+.search_dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f6f6f6;
+    min-width: 230px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content p {
+    color: black;
+    padding: 0;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content p:hover {background-color: #ddd}
+
+.show {display:block;}
+
+form h1 {
+  text-decoration: none;
+  color: #000;
+  font-size: bold;
+  left:2%;
+}
