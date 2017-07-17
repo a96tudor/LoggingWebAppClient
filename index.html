@@ -27,24 +27,58 @@
   //check_cookies();
 
   function check_cookies() {
-    var time_cookie = read_cookie("time");
-    var email_cookie = read_cookie("email");
-    if (time_cookie && email_cookie &&
-        parseInt(time_cookie) != 0 && email_cookie!="") {
-          var i = email_cookie.indexOf(" ");
-          email_cookie = email_cookie.slice(0, i);
-          if (email_cookie == "")  {
-            add_cookie("time", 0, 10);
-            add_cookie("email", "", 20);
-            window.location.replace("templates/start.html");
+    let time_cookie = read_cookie("time");
+    let token = read_cookie("token");
+    let id = read_cookie("id");
+
+
+    if (token && token != "") {
+      // Try to see if the session is still valid
+      dataToSend = {
+        "token": token
+      };
+      let url = BASE_URL + "/user/valid-token";
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader("Content-type", "application/json");
+      xhr.responseType = 'json';
+
+      xhr.onreadystatechange = function () {
+        if (xhr.response) {
+          if (xhr.status == 200) {
+            if (xhr.response["success"]) {
+              if (xhr.response["valid"]) {
+                if (time_cookie && id &&
+                  parseInt(time_cookie)!=0 && id != "") {
+                    window.location.replace("templates/working.html?"+id);
+                  } else {
+                    if (id == "") {
+                      logout();
+                    } else {
+                      add_cookie("time", 0, 10);
+                      window.location.replace("templates/start.html?" + id);
+                    }
+                  }
+                } else {
+                  delete_cookie("token");
+                  delete_cookie("time");
+                  delete_cookie("id");
+                  delete_cookie("name");
+                  window.location.replace("templates/login.html");
+                }
+
+            } else {
+              alert("Something went wrong! Please contact an admin!");
+              }
+          } else {
+            alert("Something went wrong! Please contact an admin!");
           }
-          else {
-            window.location.replace("templates/working.html?"+email_cookie);
-          }
-        } else {
-          add_cookie("time", 0, 10);
-          add_cookie("email", "", 20);
-          window.location.replace("templates/start.html");
         }
-      }
+
+      };
+      xhr.send(JSON.stringify(dataToSend));
+    } else {
+      window.location.assign("templates/login.html");
+    }
+  }
 </script>

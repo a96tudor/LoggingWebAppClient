@@ -1,6 +1,7 @@
 var pauseActive = false;
 var attempts_remaining = 3;
-var BASE_URL = "https://www.neural-guide.me"
+var BASE_URL = "https://www.neural-guide.me";
+var courses_list = [];
 
 function getSelectedText(elementId) {
     var elt = document.getElementById(elementId);
@@ -9,6 +10,12 @@ function getSelectedText(elementId) {
         return null;
 
     return elt.options[elt.selectedIndex].text;
+}
+
+function getSelectedID(elementId) {
+  var elt = document.getElementById(elementId);
+
+  return elt.selectedIndex;
 }
 
 function check_id(id) {
@@ -40,8 +47,9 @@ function start_button_press(){
       if (xhr.status == 200) {
         if (!displayed_message) {
           displayed_message = true;
-          window.location.replace("working.html?"+id);
           add_cookie("done", 0, 1);
+          openInNewTab(courses_list[getSelectedID("id_label_single")]["url"]);
+          window.location.replace("working.html?"+id);
         }
       } else {
         if (xhr.responseText != "" &&  !displayed_message) {
@@ -72,7 +80,7 @@ function pause_button_press() {
 
 function done_button_press() {
 
-  let id = read_cookie("id");
+  var id = read_cookie("id");
 
   var displayed_message = false;
   if (confirm("You are about to submit. Are you sure you want to do this?")) {
@@ -90,10 +98,11 @@ function done_button_press() {
       if (xhr.status == 200) {
         if (!displayed_message) {
           alert("success");
+          var id = read_cookie("id");
           add_cookie("time", 0, 10);
           add_cookie("done", 1, 1);
-          window.location.replace("start.html");
           displayed_message = true;
+          window.location.replace("start.html?"+id);
         }
       } else {
         if (xhr.responseText != "" &&  !displayed_message) {
@@ -177,12 +186,10 @@ function login_validate() {
 function load_courses() {
 
   let url = BASE_URL + "/get-courses";
-  var courses = [];
 
   let option_open = "<option>";
   let option_close = "</option>";
   let innerHTML = "";
-  let arrayLength = courses.length;
 
   var xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
@@ -195,13 +202,50 @@ function load_courses() {
         response = xhr.response;
         for (var i = 0; i < response["courses"].length; i++) {
           innerHTML += option_open + response["courses"][i]["name"] + option_close + "\n";
+          courses_list.push(response["courses"][i]);
         }
         document.getElementById("id_label_single").innerHTML = innerHTML;
         }
     } else {
-      //console.log(xhr.responseText);
+      alert("Something went wrong. Please contact an admin!");
     }
   }
 
   xhr.send();
+}
+
+function openInNewTab(url) {
+  var win = window.open(url, '_blank');
+  win.focus();
+}
+
+function logout() {
+  if (confirm("Are you sure?")) {
+    let id = read_cookie("id");
+    let url = BASE_URL + "/user/logout";
+    var dataToSend = {"id": id}
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.responseType = 'json';
+
+    xhr.onreadystatechange = function () {
+      if (!xhr.response) return;
+      if (xhr.status == 200) {
+        let response = xhr.response;
+        if (response["success"]) {
+          delete_cookie("token");
+          delete_cookie("id");
+          delete_cookie("name");
+          window.location.replace("/");
+        } else {
+          alert("Something went wrong. Please contact an admin.");
+        }
+      } else {
+        alert("Something went wrong. Please contact an admin.");
+      }
+    }
+    xhr.send(JSON.stringify(dataToSend));
+  }
 }
