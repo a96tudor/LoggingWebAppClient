@@ -31,6 +31,7 @@
     let token = read_cookie("token");
     let id = read_cookie("id");
 
+
     if (token && token != "") {
       // Try to see if the session is still valid
       dataToSend = {
@@ -53,26 +54,31 @@
                   } else {
                     if (id == "") {
                       logout();
-                    } else {}
+                    } else {
                       add_cookie("time", 0, 10);
-                      window.location.replace("templates/start.html" + id);
+                      window.location.replace("templates/start.html?" + id);
                     }
                   }
-              } else {
-                delete_cookie("token");
-                delete_cookie("time");
-                delete_cookie("id");
-                delete_cookie("name");
-                window.location.replace("templates/login.html");
-              }
+                } else {
+                  delete_cookie("token");
+                  delete_cookie("time");
+                  delete_cookie("id");
+                  delete_cookie("name");
+                  window.location.replace("templates/login.html");
+                }
+
             } else {
               alert("Something went wrong! Please contact an admin!");
-            }
+              }
+          } else {
+            alert("Something went wrong! Please contact an admin!");
           }
-        };
-        xhr.send(JSON.stringify(dataToSend));
-      }else {
-          window.location.replace("templates/login.html")
         }
+
+      };
+      xhr.send(JSON.stringify(dataToSend));
+    } else {
+      window.location.assign("templates/login.html");
     }
+  }
 </script>

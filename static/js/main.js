@@ -80,7 +80,7 @@ function pause_button_press() {
 
 function done_button_press() {
 
-  let id = read_cookie("id");
+  var id = read_cookie("id");
 
   var displayed_message = false;
   if (confirm("You are about to submit. Are you sure you want to do this?")) {
@@ -98,10 +98,11 @@ function done_button_press() {
       if (xhr.status == 200) {
         if (!displayed_message) {
           alert("success");
+          var id = read_cookie("id");
           add_cookie("time", 0, 10);
           add_cookie("done", 1, 1);
-          window.location.replace("start.html?"+id);
           displayed_message = true;
+          window.location.replace("start.html?"+id);
         }
       } else {
         if (xhr.responseText != "" &&  !displayed_message) {
