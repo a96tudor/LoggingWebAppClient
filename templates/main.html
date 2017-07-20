@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+<script src="../static/js/main.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+  $(document).ready(function(){
+    add_cookie("done", 1);
+    add_cookie("time", 0, 10);
+    let hash = window.location.hash.substr(1);
+    loadPage(hash);
+  });
+//]]
+</script>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/css/menu.css">
+
+  <meta charset="UTF-8">
+  <title>Start page</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js" type="text/javascript"></script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+  <title> Start page </title>
+
+  <ul class="topnav">
+    <li><a href="#start" class="active" id="home-button" onclick="loadPage('start')">Start</a></li>
+    <li><a href="#history" onclick="loadPage('history');">My History</a></li>
+    <li><a href="#leaderboard" onclick="loadPage('leaderboard');">Leaderboard</a></li>
+    <li><a href="#account" onclick="loadPage('account');">My Account</a></li>
+    <li><a href="#contact" onclick="loadPage('contact');">Contact</a></li>
+    <li class="right"><a onclick="logout()">Log Out</a></li>
+  </ul>
+
+  <div id="top-container">
+    <div id="StartMeUpLogo">
+      <br/>
+    </div>
+  </div>
+
+  <div id="main-content">
+    <!--the page content goes here -->
+  </div>
+
+</body>
+</html>

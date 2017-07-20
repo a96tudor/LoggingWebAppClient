@@ -18,18 +18,9 @@ function getSelectedID(elementId) {
   return elt.selectedIndex;
 }
 
-function check_id(id) {
-  let URL_id = location.search.substr(1);
-  return (URL_id == id);
-}
-
 function start_button_press(){
   let course_name = getSelectedText("id_label_single");
   let id = read_cookie("id");
-  if (!check_id(id)) {
-    console.log("ID tempered with... Redirecting to login...")
-    return;
-  }
 
   var displayed_message = false;
   if (course_name && id) {
@@ -102,7 +93,7 @@ function done_button_press() {
           add_cookie("time", 0, 10);
           add_cookie("done", 1, 1);
           displayed_message = true;
-          window.location.replace("start.html?"+id);
+          window.location.replace("main.html#start");
         }
       } else {
         if (xhr.responseText != "" &&  !displayed_message) {
@@ -168,7 +159,7 @@ function login_validate() {
           add_cookie("id", response["id"], 1);
           add_cookie("name", response["name"], 1);
           add_cookie("token", response["token"], 1);
-          window.location.replace("start.html?"+response["id"]);
+          window.location.replace("main.html#start");
         } else {
           alert(response["message"]);
           if (response["message"]=="User not validated")
@@ -247,5 +238,22 @@ function logout() {
       }
     }
     xhr.send(JSON.stringify(dataToSend));
+  }
+}
+
+function loadPage(page) {
+  let menuTabs = {
+    "start": "start.html",
+    "history": "stats/history.html",
+    "leaderboard": "stats/leaderboard.html",
+    //"account": "My Account",
+    //"contact": "Contact"
+  }
+  if (page in menuTabs) {
+    let hash = window.location.hash.substr(1);
+    if (page == hash) return;
+    $('#main-content').load(menuTabs[page]);
+  } else {
+    $('#main-content').load('404.html');
   }
 }

@@ -376,3 +376,20 @@ form h1 {
   font-size: bold;
   left:2%;
 }
+
+.e404 {
+  font-weight: 900;
+  font-size: 100px;
+  color: red;
+  align-content: center;
+  text-align: center; !important
+}
+
+
+.e404-message {
+  font-weight: 500;
+  font-size: 20px;
+  color: red;
+  align-content: center;
+  text-align: center; !important
+}
