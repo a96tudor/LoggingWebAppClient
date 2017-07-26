@@ -159,7 +159,7 @@ function login_validate() {
           add_cookie("id", response["id"], 1);
           add_cookie("name", response["name"], 1);
           add_cookie("token", response["token"], 1);
-          window.location.replace("main.html#start");
+          window.location.replace("main.html");
         } else {
           alert(response["message"]);
           if (response["message"]=="User not validated")
@@ -244,16 +244,39 @@ function logout() {
 function loadPage(page) {
   let menuTabs = {
     "start": "start.html",
-    "history": "stats/history.html",
-    "leaderboard": "stats/leaderboard.html",
-    //"account": "My Account",
-    //"contact": "Contact"
-  }
+    "history": "user/stats/history",
+    "leaderboard": "stats/leaderboard",
+    "account": "page-in-working.html",
+    "contact": "page-in-working.html",
+    "courses": "courses-full",
+    "": "start.html"
+  };
   if (page in menuTabs) {
     let hash = window.location.hash.substr(1);
     if (page == hash) return;
-    $('#main-content').load(menuTabs[page]);
+
+    load_HTML(menuTabs[page]);
+
+    for (var key in menuTabs) {
+      if (key=="") continue;
+      document.getElementById(key).classList.remove("active");
+    }
+    if (page!="") document.getElementById(page).classList.add("active");
+    else document.getElementById("start").classList.add("active");
+
   } else {
     $('#main-content').load('404.html');
   }
+}
+
+function load_HTML(page) {
+  url = BASE_URL + "/" + page;
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.onreadystatechange = function() {
+    if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        document.getElementById("main-content").innerHTML = xmlHttp.responseText;
+  }
+
+  xmlHttp.open("GET", url, true); // true for asynchronous
+  xmlHttp.send(null);
 }

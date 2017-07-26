@@ -39,6 +39,10 @@
             var totalSeconds = parseInt(time_cookie) ? parseInt(time_cookie) : 0;
             setInterval(setTime, 1000);
 
+            function sendTime() {
+              let url = "https://www.neural-guide.me/working/update-time";
+            }
+
             function setTime()
             {
               var done_cookie = read_cookie("done");

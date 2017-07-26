@@ -1,3 +1,9 @@
+.error-message {
+  color: red;
+  font-weight: 600;
+  font-size: 30px;
+}
+
 body {margin: 0;}
 
 ul.topnav {
@@ -54,7 +60,9 @@ body {
   margin-bottom : 100px;
   height: 300px;
   width: auto;
-  background-image: url("../img/smu-logo-hres.jpg")
+  background-image: url("../img/smu-logo-hres.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .image-container {
@@ -194,7 +202,8 @@ form h1 {
 #main-container form{
   margin: auto;
   padding: 22px 22px 22px 22px;
-  width: 800px;
+  width: 80%;
+  max-width: 800px;
   border-radius: 5px;
   background: #EAECDA;
   border-top: 4px solid #98BCBF;
@@ -252,6 +261,7 @@ form h1 {
   color: white;
   cursor: pointer;
   transition: background 0.3s ease-in-out;
+  -webkit-appearance: none;
 }
 
 #main-container form input[type="button"]:hover {
@@ -392,4 +402,17 @@ form h1 {
   color: red;
   align-content: center;
   text-align: center; !important
+}
+
+.name-style {
+  padding-left: 20%;
+  padding-top: 1%;
+  padding-bottom: 0.5%;
+  padding-right:20%;
+  font-weight: bold;
+  color: #FF7400;
+}
+
+#main-container .select2 {
+  width: 80% !important;
 }

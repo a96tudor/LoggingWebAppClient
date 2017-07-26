@@ -16,6 +16,7 @@ function submitData() {
       xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
       xhr.onreadystatechange = function () {
         if (xhr.status == 200) {
+          if (!xhr.response) return;
           // All good, redirecting to login
           alert("Validation successful! Redirecting to login...");
           window.location.replace("login.html");

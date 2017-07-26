@@ -66,7 +66,7 @@ function loadHistorySameUser() {
   xhr.setRequestHeader("Content-type", "application/json");
 
   xhr.onreadystatechange = function() {
-    if (!response) return;
+    if (!xhr.response) return;
     if (xhr.status == 200 && xhr.response["success"]) {
       let history = xhr.response["history"];
       var innerHTML = "";
@@ -76,10 +76,13 @@ function loadHistorySameUser() {
               "<td>" + item["course_name"] +
               "<td>" + item["started_at"] +
               "<td>" + getHH_MM_SS(item["seconds"]) +
-              "<td> We'll have rating feature here later "
+              "<td class = 'work-in-progess'> Rating coming soon! "
       }
+      document.getElementById("history-body").innerHTML = innerHTML;
+      //document.getElementById("total").innerHTML = getHH_MM_SS(total);
     } else {
       alert("Error loading user information. Please contact an administrator!")
+      console.log(xhr.response["message"]);
     }
   }
   let dataToSend = {
@@ -88,4 +91,14 @@ function loadHistorySameUser() {
   };
 
   xhr.send(JSON.stringify(dataToSend));
+}
+
+function fillInTemplate(page) {
+  switch (page) {
+    case "leaderboard": loadLeaderboard();
+      break;
+    case "history": loadHistorySameUser();
+    default:
+      return;
+  }
 }
