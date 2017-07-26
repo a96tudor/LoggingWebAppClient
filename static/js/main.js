@@ -244,18 +244,18 @@ function logout() {
 function loadPage(page) {
   let menuTabs = {
     "start": "start.html",
-    "history": "user/stats/history",
-    "leaderboard": "stats/leaderboard",
+    "history": loadHistorySameUser,
+    "leaderboard": function() { load_HTML("stats/leaderboard"); } ,
     "account": "page-in-working.html",
     "contact": "page-in-working.html",
-    "courses": "courses-full",
+    "courses": function() { load_HTML("courses-full");},
     "": "start.html"
   };
   if (page in menuTabs) {
     let hash = window.location.hash.substr(1);
     if (page == hash) return;
 
-    load_HTML(menuTabs[page]);
+    menuTabs[page]();
 
     for (var key in menuTabs) {
       if (key=="") continue;
@@ -269,10 +269,35 @@ function loadPage(page) {
   }
 }
 
+function loadHistorySameUser() {
+  console.log("test again");
+  let url = "https://www.neural-guide.me/user/stats/history";
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-type", "application/json");
+  console.log("opened request")
+  xhr.onreadystatechange = function() {
+    console.log("received response")
+    if (!xhr.response) return;
+    if (xhr.status == 200 && xhr.readyState==4) {
+      console.log(xhr.responseText);
+      document.getElementById("main-content").innerHTML = xhr.responseText;
+    } 
+  }
+  let dataToSend = {
+    "asking": read_cookie("id"),
+    "user": read_cookie("id")
+  };
+
+  xhr.send(JSON.stringify(dataToSend));
+}
+
 function load_HTML(page) {
   url = BASE_URL + "/" + page;
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
+    if (!xmlHttp.response) return;
     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
         document.getElementById("main-content").innerHTML = xmlHttp.responseText;
   }

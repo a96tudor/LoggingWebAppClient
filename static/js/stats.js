@@ -57,42 +57,6 @@ function loadLeaderboard() {
   xhr.send();
 }
 
-function loadHistorySameUser() {
-  let url = "https://www.neural-guide.me/user/stats/history";
-
-  let xhr = new XMLHttpRequest();
-  xhr.open("POST", url, true);
-  xhr.responseType='json';
-  xhr.setRequestHeader("Content-type", "application/json");
-
-  xhr.onreadystatechange = function() {
-    if (!xhr.response) return;
-    if (xhr.status == 200 && xhr.response["success"]) {
-      let history = xhr.response["history"];
-      var innerHTML = "";
-      for (var i=0; i<history.length; i++) {
-        let item = history[i];
-        innerHTML += "<tr> \n <td> " + (i+1) +
-              "<td>" + item["course_name"] +
-              "<td>" + item["started_at"] +
-              "<td>" + getHH_MM_SS(item["seconds"]) +
-              "<td class = 'work-in-progess'> Rating coming soon! "
-      }
-      document.getElementById("history-body").innerHTML = innerHTML;
-      //document.getElementById("total").innerHTML = getHH_MM_SS(total);
-    } else {
-      alert("Error loading user information. Please contact an administrator!")
-      console.log(xhr.response["message"]);
-    }
-  }
-  let dataToSend = {
-    "asking": read_cookie("id"),
-    "user": read_cookie("id")
-  };
-
-  xhr.send(JSON.stringify(dataToSend));
-}
-
 function fillInTemplate(page) {
   switch (page) {
     case "leaderboard": loadLeaderboard();
