@@ -247,7 +247,7 @@ form h1 {
   text-emphasis-color: #fff;
 }
 
-#main-container form input[type="button"] {
+input[type="button"] {
   margin-top: 10px;
   position:relative;
   font-size: 20px;
@@ -264,13 +264,13 @@ form h1 {
   -webkit-appearance: none;
 }
 
-#main-container form input[type="button"]:hover {
+input[type="button"]:hover {
   background: #16aa56;
   transform: scale(1.05)
 }
 
 
-#main-container form input[type="button"]:active {
+input[type="button"]:active {
   transform: scale(0.95)
 }
 
@@ -404,6 +404,14 @@ form h1 {
   text-align: center; !important
 }
 
+.error-message {
+  font-weight: 500;
+  font-size: 20px;
+  color: red;
+  align-content: center;
+  text-align: center; !important
+}
+
 .name-style {
   padding-left: 20%;
   padding-top: 1%;
@@ -415,4 +423,8 @@ form h1 {
 
 #main-container .select2 {
   width: 80% !important;
+}
+
+.start-button-courses {
+  width: 100px;
 }

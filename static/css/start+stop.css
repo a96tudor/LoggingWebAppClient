@@ -95,7 +95,7 @@ after { clear: both; }
   text-emphasis-color: #fff;
 }
 
-#main-container form input[type="button"] {
+input[type="button"] {
   margin-top: 10px;
   position:relative;
   font-size: 20px;
@@ -111,13 +111,13 @@ after { clear: both; }
   transition: background 0.3s ease-in-out;
 }
 
-#main-container form input[type="button"]:hover {
+input[type="button"]:hover {
   background: #16aa56;
   transform: scale(1.05)
 }
 
 
-#main-container form input[type="button"]:active {
+input[type="button"]:active {
   transform: scale(0.95)
 }
 

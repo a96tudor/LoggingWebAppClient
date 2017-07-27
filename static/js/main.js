@@ -18,8 +18,7 @@ function getSelectedID(elementId) {
   return elt.selectedIndex;
 }
 
-function start_button_press(){
-  let course_name = getSelectedText("id_label_single");
+function start_work(course_name, course_url) {
   let id = read_cookie("id");
 
   var displayed_message = false;
@@ -39,17 +38,13 @@ function start_button_press(){
         if (!displayed_message) {
           displayed_message = true;
           add_cookie("done", 0, 1);
-          openInNewTab(courses_list[getSelectedID("id_label_single")]["url"]);
+          openInNewTab(course_url);
           window.location.replace("working.html?"+id);
         }
       } else {
         if (xhr.responseText != "" &&  !displayed_message) {
           alert(xhr.responseText);
           displayed_message = true;
-        }
-        if (xhr.status != 500) {
-          document.getElementById("course-name").value = '';
-          document.getElementById("email").value = '';
         }
       }
     };
@@ -58,6 +53,14 @@ function start_button_press(){
   } else {
     alert("No course name entered!");
   }
+}
+
+function start_button_press(){
+  let course_name = getSelectedText("id_label_single");
+
+  let course_url = courses_list[getSelectedID("id_label_single")]["url"];
+
+  start_work(course_name, course_url);
 }
 
 function pause_button_press() {
@@ -243,13 +246,13 @@ function logout() {
 
 function loadPage(page) {
   let menuTabs = {
-    "start": "start.html",
+    "start": function() { load_HTML_localhost("start.html");},
     "history": loadHistorySameUser,
-    "leaderboard": function() { load_HTML("stats/leaderboard"); } ,
-    "account": "page-in-working.html",
-    "contact": "page-in-working.html",
-    "courses": function() { load_HTML("courses-full");},
-    "": "start.html"
+    "leaderboard": function() { load_HTML_from_server("stats/leaderboard"); } ,
+    "account": function() { load_HTML_localhost("page-in-working.html");},
+    "contact": function() { load_HTML_localhost("page-in-working.html");},
+    "courses": function() { load_HTML_from_server("courses-full");},
+    "": function() { load_HTML_localhost("start.html"); window.location.hash = "#start";}
   };
   if (page in menuTabs) {
     let hash = window.location.hash.substr(1);
@@ -270,20 +273,16 @@ function loadPage(page) {
 }
 
 function loadHistorySameUser() {
-  console.log("test again");
   let url = "https://www.neural-guide.me/user/stats/history";
 
   let xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json");
-  console.log("opened request")
   xhr.onreadystatechange = function() {
-    console.log("received response")
     if (!xhr.response) return;
     if (xhr.status == 200 && xhr.readyState==4) {
-      console.log(xhr.responseText);
       document.getElementById("main-content").innerHTML = xhr.responseText;
-    } 
+    }
   }
   let dataToSend = {
     "asking": read_cookie("id"),
@@ -293,7 +292,11 @@ function loadHistorySameUser() {
   xhr.send(JSON.stringify(dataToSend));
 }
 
-function load_HTML(page) {
+function load_HTML_localhost(page) {
+  $("#main-content").load(page);
+}
+
+function load_HTML_from_server(page) {
   url = BASE_URL + "/" + page;
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
