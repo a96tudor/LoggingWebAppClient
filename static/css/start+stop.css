@@ -267,3 +267,7 @@ form h1 {
   font-size: bold;
   left:2%;
 }
+
+div.clock {
+  margin-left: 28% !important;
+}

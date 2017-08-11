@@ -7,6 +7,12 @@
       <link rel="stylesheet" href="../static/css/start+stop.css">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
 
+      <link rel="stylesheet" href="../static/css/flipclock.css">
+
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+      <script src="../static/js/flipclock.min.js"></script>
+
 </head>
 
 <script src="../static/js/main.js"></script>
@@ -28,68 +34,64 @@
 
 
     <div id="main-container">
-      <div id="timer-container">
 
-        <label id="hours">00</label>:<label id="minutes">00</label>:<label id="seconds">00</label>
-          <script type="text/javascript">
-            var minutesLabel = document.getElementById("minutes");
-            var secondsLabel = document.getElementById("seconds");
-            var hoursLabel = document.getElementById("hours");
-            var time_cookie = read_cookie("time");
-            var totalSeconds = parseInt(time_cookie) ? parseInt(time_cookie) : 0;
-            setInterval(setTime, 1000);
-
-            function sendTime() {
-              let url = "https://www.neural-guide.me/working/update-time";
-            }
-
-            function setTime()
-            {
-              var done_cookie = read_cookie("done");
-              var done = parseInt(done_cookie) ? parseInt(done_cookie) : 0;
-              if (done == 1) {
-                window.location.replace("main.html#start");
-              }
-              if (pauseActive) return;
-              ++totalSeconds;
-              secondsLabel.innerHTML = pad(totalSeconds%60);
-              var totalMinutes = parseInt(totalSeconds/60);
-              minutesLabel.innerHTML = pad(totalMinutes%60);
-              hoursLabel.innerHTML = pad(parseInt(totalMinutes/60));
-              add_cookie("time", totalSeconds, 10);
-            }
-
-            function pad(val)
-            {
-              var valString = val + "";
-              if(valString.length < 2)
-              {
-                  return "0" + valString;
-              }
-              else
-              {
-                  return valString;
-              }
-            }
-        </script>
-
-      </div>
+        <div class="clock" style="margin:2em; align:center;"></div>
 
       <div id="buttons-container">
 
         <button class="button"
-                onclick="pause_button_press()"
+
                 id = "pause-button">
             Pause
         </button>
 
         <button class="button button-tone-down"
-                onclick="done_button_press()"
+
                 id = "done-button">
             Done!
         </button>
 
       </div>
+
+      <script type="text/javascript">
+         var clock;
+
+         $(document).ready(function() {
+
+         clock = $('.clock').FlipClock({
+          clockFace: 'HourlyCounter'
+         });
+
+         let time_elapsed = parseInt(read_cookie("time")) ? parseInt(read_cookie("time")) : 0;
+
+         clock.getTime().addSeconds(time_elapsed);
+
+         setInterval(
+           function() { sendTimeUpdate(clock.getTime().getSeconds()); },
+           60000
+         );
+
+         setInterval (
+           function () {add_cookie("time", clock.getTime().getSeconds(), 1);},
+           10000
+         );
+
+        });
+
+      $('#pause-button').click(function() {
+        pause_button_press();
+        if (pauseActive) {
+          clock.stop();
+        } else {
+          clock.start();
+        }
+      });
+
+      $('#done-button').click(function() {
+        done_button_press();
+      });
+
+     </script>
 
     </div>
   </body>

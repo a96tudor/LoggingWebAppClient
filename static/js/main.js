@@ -81,7 +81,7 @@ function done_button_press() {
 
     var data_to_send = {
       "id": id,
-      "time": totalSeconds
+      "time": clock.getTime().getSeconds()
     };
 
     var xhr = new XMLHttpRequest();
@@ -96,7 +96,7 @@ function done_button_press() {
           add_cookie("time", 0, 10);
           add_cookie("done", 1, 1);
           displayed_message = true;
-          window.location.replace("main.html#start");
+          window.location.replace("main.html");
         }
       } else {
         if (xhr.responseText != "" &&  !displayed_message) {
@@ -208,9 +208,15 @@ function load_courses() {
   xhr.send();
 }
 
-function openInNewTab(url) {
-  var win = window.open(url, '_blank');
-  win.focus();
+async function openInNewTab(url) {
+  try {
+    var win = window.open(url, '_blank');
+    win.focus();
+  } catch (err){
+    alert("Please enable the popups for this website!");
+    await sleep(10000);
+    openInNewTab(url);
+  }
 }
 
 function logout() {
@@ -244,24 +250,30 @@ function logout() {
   }
 }
 
-function loadPage(page) {
+function loadPage(page, first_load) {
   let menuTabs = {
     "start": function() { load_HTML_localhost("start.html");},
     "history": loadHistorySameUser,
     "leaderboard": function() { load_HTML_from_server("stats/leaderboard"); } ,
-    "account": function() { load_HTML_localhost("page-in-working.html");},
+    "account": function() {
+      let id_user = read_cookie("id");
+      load_HTML_from_server("/user/info?id_asker=" + id_user + "&id_user=" + id_user);
+    },
     "contact": function() { load_HTML_localhost("page-in-working.html");},
     "courses": function() { load_HTML_from_server("courses-full");},
-    "": function() { load_HTML_localhost("start.html"); window.location.hash = "#start";}
   };
+
+  console.log(page);
+
   if (page in menuTabs) {
     let hash = window.location.hash.substr(1);
-    if (page == hash) return;
+    if (page == hash && !first_load) return;
+
+    console.log("Loading" + page);
 
     menuTabs[page]();
 
     for (var key in menuTabs) {
-      if (key=="") continue;
       document.getElementById(key).classList.remove("active");
     }
     if (page!="") document.getElementById(page).classList.add("active");
@@ -307,4 +319,182 @@ function load_HTML_from_server(page) {
 
   xmlHttp.open("GET", url, true); // true for asynchronous
   xmlHttp.send(null);
+}
+
+function toggleDisplayHide(toDisplay, toHide) {
+  for (item in toHide) {
+    $("#"+toHide[item]).hide();
+  }
+
+  for (item in toDisplay) {
+    $("#"+toDisplay[item]).show();
+  }
+}
+
+function updateName() {
+  let newName = document.getElementById('text-name-edit').value;
+  let url = BASE_URL + "/user/update/name";
+  let uid = read_cookie('id');
+  let dataToSend = {
+      "id_updater": uid,
+      "id_user": uid,
+      "new_name": newName
+    };
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-type", "application/json");
+  xhr.responseType = "json";
+
+  xhr.onreadystatechange = function() {
+    if (!xhr.response) return;
+     if (xhr.status == 200) {
+        let resp = xhr.response;
+        if (resp["success"]) {
+          flashElements(['text-name-edit', 'button-name-edit', 'general'], '#7EAD00')
+          document.getElementById('nameP').innerHTML = newName;
+          toggleDisplayHide(['nameP', 'edit-icon-name'],
+                            ['text-name-edit', 'button-name-edit']);
+        } else {
+          flashElements(['text-name-edit', 'button-name-edit', 'general'], '#D93431')
+          alert(resp["message"]);
+        }
+      } else {
+        flashElements(['text-name-edit', 'button-name-edit', 'general'], '#D93431')
+        alert(xhr.responseText);
+      }
+  };
+  xhr.send(JSON.stringify(dataToSend));
+}
+
+function updatePass() {
+  let oldPass = document.getElementById('old_pass').value;
+  let newPass = document.getElementById('new_pass').value;
+  let newPassCnf = document.getElementById('new_pass_confirm').value;
+  let uid = read_cookie('id');
+
+  if (!(newPass && newPassCnf && newPass != "" && newPassCnf != "" && newPass == newPassCnf)) {
+    alert('The two passwords are invalid');
+    return;
+  }
+
+  let dataToSend = {
+    "old_pass": oldPass,
+    "new_pass": newPass,
+    "id_user": uid
+  };
+
+  let url = BASE_URL + "/user/update/password";
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-type", "application/json");
+  xhr.responseType = "json";
+
+  xhr.onreadystatechange = function() {
+    if (!xhr.response) return;
+      if (xhr.status == 200) {
+        let resp = xhr.response;
+        if (resp["success"]) {
+          flashElements(['password-reset-container', 'pass-confirm', 'security'], '#7EAD00')
+          alert("Success!")
+          toggleDisplayHide(['button-reset-pass'], ['password-reset-container', 'pass-confirm']);
+        } else {
+          flashElements(['password-reset-container', 'pass-confirm', 'security'], '#D93431')
+          alert(resp["message"]);
+        }
+      } else {
+        flashElements(['password-reset-container', 'pass-confirm', 'security'], '#D93431')
+        alert(xhr.responseText);
+      }
+  };
+  xhr.send(JSON.stringify(dataToSend));
+}
+
+
+/**
+    Function that flashes a set of elements in a specific color
+
+  @param elements   The list of elements ids that I want to flash
+  @param color      The color I want them to flash in
+*/
+function flashElements(elements, color) {
+
+  jQuery.fn.flash = function( color, duration ) {
+
+    var current = this.css( 'color' );
+
+    this.animate( { color: color }, duration / 2 );
+    this.animate( { color: current }, duration / 2 );
+  }
+
+  var flash = function(elements, color) {
+    var opacity = 100;
+    var interval = setInterval(function() {
+      opacity -= 3;
+      if (opacity <= 0) clearInterval(interval);
+        $(elements).css({color: color});
+      }, 30)
+    };
+
+  for (var idx in elements) {
+    flash("#"+elements[idx], color);
+  }
+
+}
+
+function sendTimeUpdate(time) {
+  let url = BASE_URL + "/working/update-time?";
+  let id = read_cookie("id");
+  url += "id=" + id;
+  url += "&time=" + time.toString();
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("PUT", url, true);
+  xhr.send();
+}
+
+function forcedStopWork(time) {
+  let url = BASE_URL + "/stop-work/forced?";
+  let id = read_cookie("id");
+  url += "id_asker=" + id;
+  url += "&id_user=" + id;
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("PUT", url, true);
+  xhr.send();
+
+  $("#warning-div").hide();
+  $("#warning-message").hide();
+}
+
+function continueWork(time) {
+  add_cookie("time", time, 1);
+
+  let id = read_cookie("id");
+
+  window.location.replace("working.html?"+id.toString());
+}
+
+function filterTableContents() {
+  let filter = document.getElementById("filter-input").value.toUpperCase();
+  let table = document.getElementById("table-contents");
+  let trs = table.getElementsByTagName("tr");
+
+  for (i=0; i < trs.length; i++) {
+    let tds = trs[i].getElementsByTagName("td");
+    var hasFilter = false;
+    for (j = 0; i < tds.length; i++) {
+      if (tds[j]) {
+        if (tds[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+          hasFilter = true;
+          break;
+        }
+      }
+    }
+    if (hasFilter) {
+      tr[i].style.display = "";
+    } else {
+      tr[i].style.display = "none";
+    }
+  }
 }

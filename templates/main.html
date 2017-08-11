@@ -3,12 +3,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
 <script src="../static/js/main.js" type="text/javascript"></script>
 <link rel="stylesheet" href="../static/css/leaderboard.css" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script type="text/javascript">
 //<![CDATA[
   $(document).ready(function(){
     add_cookie("done", 1);
     add_cookie("time", 0, 10);
-    loadPage("start");
+    let hash = window.location.hash.substr(1) == "" ? "start" : window.location.hash.substr(1);
+    loadPage(hash, true);
     let name = read_cookie("name");
   });
 //]]
@@ -30,12 +32,12 @@
   <title> Start page </title>
 
   <ul class="topnav">
-    <li><a href="#start" class="active" id="start" onclick="loadPage('start')">Start</a></li>
-    <li><a href="#history" id="history" onclick="loadPage('history');">My History</a></li>
-    <li><a href="#leaderboard" id="leaderboard" onclick="loadPage('leaderboard');">Leaderboard</a></li>
-    <li><a href="#account" id="account" onclick="loadPage('account');">My Account</a></li>
-    <li><a href="#contact" id="contact" onclick="loadPage('contact');">Contact</a></li>
-    <li><a href="#courses" id="courses" onclick="loadPage('courses');">Courses</a></li>
+    <li><a href="#start" id="start" onclick="loadPage('start', false)">Start</a></li>
+    <li><a href="#history" id="history" onclick="loadPage('history', false);">My History</a></li>
+    <li><a href="#leaderboard" id="leaderboard" onclick="loadPage('leaderboard', false);">Leaderboard</a></li>
+    <li><a href="#account" id="account" onclick="loadPage('account', false);">My Account</a></li>
+    <li><a href="#contact" id="contact" onclick="loadPage('contact', false);">Contact</a></li>
+    <li><a href="#courses" id="courses" onclick="loadPage('courses', false);">Courses</a></li>
     <!-- <li id="name" class="name-style"> </li> -->
     <li class="right"><a onclick="logout()">Log Out</a></li>
   </ul>
@@ -46,9 +48,19 @@
     </div>
   </div>
 
+  <h1 class="info-message">
+    For a full experience when using this website, please allow popups!
+  </h1>
+
   <div id="main-content">
     <!--the page content goes here -->
   </div>
 
+
+  <footer class="copyright">
+    <small>
+      &copy; Copyright 2017, Start Me Up Careers Limited. All rights reserved.
+    </small>
+  </footer>
 </body>
 </html>
