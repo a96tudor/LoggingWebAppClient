@@ -18,18 +18,9 @@ function getSelectedID(elementId) {
   return elt.selectedIndex;
 }
 
-function check_id(id) {
-  let URL_id = location.search.substr(1);
-  return (URL_id == id);
-}
-
 function start_button_press(){
   let course_name = getSelectedText("id_label_single");
   let id = read_cookie("id");
-  if (!check_id(id)) {
-    console.log("ID tempered with... Redirecting to login...")
-    return;
-  }
 
   var displayed_message = false;
   if (course_name && id) {
@@ -102,7 +93,7 @@ function done_button_press() {
           add_cookie("time", 0, 10);
           add_cookie("done", 1, 1);
           displayed_message = true;
-          window.location.replace("start.html?"+id);
+          window.location.replace("main.html#start");
         }
       } else {
         if (xhr.responseText != "" &&  !displayed_message) {
@@ -168,7 +159,7 @@ function login_validate() {
           add_cookie("id", response["id"], 1);
           add_cookie("name", response["name"], 1);
           add_cookie("token", response["token"], 1);
-          window.location.replace("start.html?"+response["id"]);
+          window.location.replace("main.html");
         } else {
           alert(response["message"]);
           if (response["message"]=="User not validated")
@@ -248,4 +239,69 @@ function logout() {
     }
     xhr.send(JSON.stringify(dataToSend));
   }
+}
+
+function loadPage(page) {
+  let menuTabs = {
+    "start": "start.html",
+    "history": loadHistorySameUser,
+    "leaderboard": function() { load_HTML("stats/leaderboard"); } ,
+    "account": "page-in-working.html",
+    "contact": "page-in-working.html",
+    "courses": function() { load_HTML("courses-full");},
+    "": "start.html"
+  };
+  if (page in menuTabs) {
+    let hash = window.location.hash.substr(1);
+    if (page == hash) return;
+
+    menuTabs[page]();
+
+    for (var key in menuTabs) {
+      if (key=="") continue;
+      document.getElementById(key).classList.remove("active");
+    }
+    if (page!="") document.getElementById(page).classList.add("active");
+    else document.getElementById("start").classList.add("active");
+
+  } else {
+    $('#main-content').load('404.html');
+  }
+}
+
+function loadHistorySameUser() {
+  console.log("test again");
+  let url = "https://www.neural-guide.me/user/stats/history";
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-type", "application/json");
+  console.log("opened request")
+  xhr.onreadystatechange = function() {
+    console.log("received response")
+    if (!xhr.response) return;
+    if (xhr.status == 200 && xhr.readyState==4) {
+      console.log(xhr.responseText);
+      document.getElementById("main-content").innerHTML = xhr.responseText;
+    } 
+  }
+  let dataToSend = {
+    "asking": read_cookie("id"),
+    "user": read_cookie("id")
+  };
+
+  xhr.send(JSON.stringify(dataToSend));
+}
+
+function load_HTML(page) {
+  url = BASE_URL + "/" + page;
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.onreadystatechange = function() {
+    if (!xmlHttp.response) return;
+    if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        document.getElementById("main-content").innerHTML = xmlHttp.responseText;
+  }
+
+  xmlHttp.open("GET", url, true); // true for asynchronous
+  xmlHttp.send(null);
 }

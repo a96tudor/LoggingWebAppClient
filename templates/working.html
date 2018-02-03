@@ -39,12 +39,16 @@
             var totalSeconds = parseInt(time_cookie) ? parseInt(time_cookie) : 0;
             setInterval(setTime, 1000);
 
+            function sendTime() {
+              let url = "https://www.neural-guide.me/working/update-time";
+            }
+
             function setTime()
             {
               var done_cookie = read_cookie("done");
               var done = parseInt(done_cookie) ? parseInt(done_cookie) : 0;
               if (done == 1) {
-                window.location.replace("start.html");
+                window.location.replace("main.html#start");
               }
               if (pauseActive) return;
               ++totalSeconds;
